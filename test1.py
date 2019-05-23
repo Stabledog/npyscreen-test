@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 from npyscreen import *  # Which comes from pip
-from curses import wrapper
 
 
-def main(stdscr):
-    stdscr.clear()
 
-    my_form = Form()
+class MyApp(NPSAppManaged):
+    def onStart(self):
+        self.registerForm('MAIN',MainForm())
 
-    box1 = my_form.add_widget(TitleText, name="Your name:")
-    url = my_form.add_widget(TitleText, name="Favorite url:")
+class MainForm(Form):
+    def create(self):
+        self.add(TitleText, name='Text:', value='Hello world' )
 
-    my_form.edit()
+    def afterEditing(self):
+        self.parentApp.setNextForm(None)
 
 
 if __name__=="__main__":
-    wrapper(main)
+    ta = MyApp()
+    ta.run()
+
 
